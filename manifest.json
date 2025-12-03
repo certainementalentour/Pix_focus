@@ -1,0 +1,17 @@
+{
+  "manifest_version": 3,
+  "name": "Pix - AFD (Anti Focus Detection pas les n*zis)",
+  "description": "Restreint les mécanismes de détection de la perte de focus sur pix.fr.",
+  "version": "3.141592",
+  "version_name": "Bêta pi",
+  "icons": {
+    "128": "icons/128x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.pix.fr/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
