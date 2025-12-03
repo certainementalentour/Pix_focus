@@ -1,7 +1,17 @@
+// ==UserScript==
+// @name         Pix
+// @version      2025-11-30
+// @description  supprimer la détection du focus pix
+// @author       groskk
+// @match        *://*.pix.fr/*
+// @run-at       document-start
+// @grant        none
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=app.pix.fr
+// ==/UserScript==
+
 (function() {
 	"use strict";
-
-	// préparer l'injection dans le main du DOM - {code à injecter}
+	// préparer l'injection dans le main du DOM
 	const injection = () => {
 		// propriétés de visibilité
 		Object.defineProperty(document, "hidden", {
@@ -28,13 +38,13 @@
 			"mouseout",
 			"focus",
 			"focusin",
-		].forEach(ev => {
+		].forEach((ev) => {
 			window.addEventListener(ev, blocked_ev, true);
 			document.addEventListener(ev, blocked_ev, true);
 		});
 
-		// Override de tous les handler  -- mettre à un bloc vide pour 'annuler' la définition de la fonction
-		const handler = () => {};
+		// Override de tous les handler window
+		const handler = () => { };
 
 		window.onblur = handler;
 		window.onfocus = handler;
@@ -42,7 +52,7 @@
 		document.onfocus = handler;
 
 		// blur(), focus()
-		window.blur = handler;  // Une fonction dépréciée mais tjrs présente dans certains frameworks
+		window.blur = handler;
 		window.focus = handler;
 		HTMLElement.prototype.blur = handler;
 		HTMLElement.prototype.focus = handler;
@@ -52,8 +62,7 @@
 		window.requestAnimationFrame = function(cb) {
 			return realRAF(() => cb(performance.now()));
 		};
-
-		// éviter la détection de latence (via timers)
+		// éviter la détection de latence
 		const realSetTimeout = window.setTimeout;
 		window.setTimeout = function(cb, t) {
 			return realSetTimeout(cb, 0); // remettre à 0 les timers
@@ -63,7 +72,6 @@
 	// injecter dans le main world
 	const script = document.createElement("script");
 	script.textContent = `(${injection})();`;
-	(document.head || document.documentElement).appendChild(script);
+	document.documentElement.appendChild(script);
 	script.remove();
-
 })();
