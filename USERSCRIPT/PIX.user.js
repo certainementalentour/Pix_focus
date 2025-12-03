@@ -6,7 +6,7 @@
 // @match        *://*.pix.fr/*
 // @run-at       document-start
 // @grant        none
-// @icon         https://www.google.com/s2/favicons?sz=64&domain=app.pix.fr
+// @icon         https://www.google.com/s2/favicons?sz=64&domain=pix.fr
 // ==/UserScript==
 
 (function() {
